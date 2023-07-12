@@ -3,8 +3,9 @@
   'South Central US'
   'East US'
   'France Central'
+  'West Europe'
 ])
-param location string = 'South Central US'
+param location string = 'West Europe'
 
 @description('''
 Unique name for the chat application.  The name is required to be unique as it will be used as a prefix for the names of these resources:
@@ -32,10 +33,10 @@ param appServiceSku string = 'F1'
 ])
 param openAiSku string = 'S0'
 
-@description('Git repository URL for the chat application. This defaults to the [`azure-samples/cosmosdb-chatgpt`](https://github.com/azure-samples/cosmosdb-chatgpt) repository.')
-param appGitRepository string = 'https://github.com/azure-samples/cosmosdb-chatgpt.git'
+@description('Git repository URL for the chat application. This defaults to the [`AllanChongNC/default-chatgpt-cosmosdb`](https://github.com/AllanChongNC/default-chatgpt-cosmosdb) repository.')
+param appGitRepository string = 'https://github.com/AllanChongNC/default-chatgpt-cosmosdb.git'
 
-@description('Git repository branch for the chat application. This defaults to the [**main** branch of the `azure-samples/cosmosdb-chatgpt`](https://github.com/azure-samples/cosmosdb-chatgpt/tree/main) repository.')
+@description('Git repository branch for the chat application. This defaults to the [**main** branch of the `AllanChongNC/default-chatgpt-cosmosdb`](https://github.com/AllanChongNC/default-chatgpt-cosmosdb/tree/main) repository.')
 param appGetRepositoryBranch string = 'main'
 
 var openAiSettings = {
