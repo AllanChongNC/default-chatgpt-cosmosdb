@@ -151,6 +151,8 @@
     public EventCallback OnNavBarVisibilityUpdated { get; set; }
 
     private string? UserPrompt { get; set; }
+
+    private string? UserPromptSet { get; set; }
 	
     private List<Message>? _messagesInChat;
     private static event EventHandler<Session>? _onMessagePosted;
@@ -219,12 +221,15 @@
             return;
         }
 
-        await chatService.GetChatCompletionAsync(CurrentSession?.SessionId, UserPrompt);
-
         if (UserPrompt != String.Empty)
         {           
+	    UserPromptSet = UserPrompt;
 	    UserPrompt = String.Empty;
         }
+
+        await chatService.GetChatCompletionAsync(CurrentSession?.SessionId, UserPromptSet);
+
+
 
         if(_messagesInChat?.Count == 2)
         {
