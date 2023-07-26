@@ -236,13 +236,10 @@
 
     private async Task NewChat()
     {
-        await chatService.CreateNewChatSessionAsync();
-
-        if (ChatSessions.Count == 1)
-        {
-            CurrentSession = ChatSessions[0] with { };
-            await LoadCurrentChatAsync();
-        }
+        var newSession = await chatService.CreateNewChatSessionAsync();
+        CurrentSession = newSession with { };
+            
+        await LoadCurrentChatAsync();
 
         UpdateNavMenuDisplay("Add");
     }
