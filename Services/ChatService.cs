@@ -66,13 +66,13 @@ public class ChatService
     /// <summary>
     /// User creates a new Chat Session.
     /// </summary>
-    public async Task CreateNewChatSessionAsync()
+    public async Task<Session> CreateNewChatSessionAsync()
     {
         Session session = new();
 
         _sessions.Add(session);
 
-        await _cosmosDbService.InsertSessionAsync(session);
+        return await _cosmosDbService.InsertSessionAsync(session);
 
     }
 
