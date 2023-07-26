@@ -72,7 +72,9 @@ public class ChatService
 
         _sessions.Add(session);
 
-        return await _cosmosDbService.InsertSessionAsync(session);
+        await _cosmosDbService.InsertSessionAsync(session);
+
+        return await _openAiService.InitiateChatCompletionAsync();
 
     }
 
