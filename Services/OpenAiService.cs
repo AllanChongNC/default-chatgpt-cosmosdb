@@ -63,7 +63,6 @@ public class OpenAiService
             Messages =
             {
                 systemMessage,
-                userMessage
             },
             User = sessionId,
             MaxTokens = 4000,
@@ -75,6 +74,23 @@ public class OpenAiService
 
         Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
+        ChatCompletionsOptions options = new()
+        {
+            
+            Messages =
+            {
+                ///systemMessage,
+                userMessage
+            },
+            User = sessionId,
+            MaxTokens = 4000,
+            Temperature = 0.3f,
+            NucleusSamplingFactor = 0.5f,
+            FrequencyPenalty = 0,
+            PresencePenalty = 0
+        };
+
+        Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
         ChatCompletions completions = completionsResponse.Value;
 
