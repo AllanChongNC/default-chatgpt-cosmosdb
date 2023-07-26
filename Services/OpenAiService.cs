@@ -84,11 +84,11 @@ public class OpenAiService
         );
     }
 
-    public async Task<(string response, int promptTokens, int responseTokens)> InitiateChatCompletionAsync(string sessionId, string userPrompt)
+    public async Task<(string response, int promptTokens, int responseTokens)> InitiateChatCompletionAsync()
     {
         
         ChatMessage systemMessage = new(ChatRole.System, _systemPrompt);
-        ChatMessage userMessage = new(ChatRole.User, userPrompt);
+        ///ChatMessage userMessage = new(ChatRole.User, userPrompt);
         
         ChatCompletionsOptions options = new()
         {
@@ -97,7 +97,7 @@ public class OpenAiService
             {
                 systemMessage
             },
-            User = sessionId,
+            ///User = sessionId,
             MaxTokens = 4000,
             Temperature = 0.3f,
             NucleusSamplingFactor = 0.5f,
