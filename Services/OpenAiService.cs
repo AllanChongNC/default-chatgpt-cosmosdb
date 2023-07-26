@@ -83,38 +83,6 @@ public class OpenAiService
             responseTokens: completions.Usage.CompletionTokens
         );
     }
-
-    public async Task<(string response, int promptTokens, int responseTokens)> InitiateChatCompletionAsync()
-    {
-        
-        ChatMessage systemMessage = new(ChatRole.System, _systemPrompt);
-        ///ChatMessage userMessage = new(ChatRole.User, userPrompt);
-        
-        ChatCompletionsOptions options = new()
-        {
-            
-            Messages =
-            {
-                systemMessage
-            },
-            ///User = sessionId,
-            MaxTokens = 4000,
-            Temperature = 0.3f,
-            NucleusSamplingFactor = 0.5f,
-            FrequencyPenalty = 0,
-            PresencePenalty = 0
-        };
-
-        Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
-
-        ChatCompletions completions = completionsResponse.Value;
-
-        return (
-            response: completions.Choices[0].Message.Content,
-            promptTokens: completions.Usage.PromptTokens,
-            responseTokens: completions.Usage.CompletionTokens
-        );
-    }
     
     /// <summary>
     /// Sends the existing conversation to the OpenAI model and returns a two word summary.
