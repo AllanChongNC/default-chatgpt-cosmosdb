@@ -109,35 +109,40 @@ public class OpenAiService
     /// <returns>Summarization response from the OpenAI model deployment.</returns>
     public async Task<string> SummarizeAsync(string sessionId, string userPrompt)
     {
-        
-        ChatMessage systemMessage = new(ChatRole.System, _summarizePrompt);
-        ChatMessage userMessage = new(ChatRole.User, userPrompt);
-        
-        ChatCompletionsOptions options = new()
+        bool restart = false;
+        do
         {
-            Messages = { 
-                systemMessage,
-                userMessage
-            },
-            User = sessionId,
-            MaxTokens = 200,
-            Temperature = 0.0f,
-            NucleusSamplingFactor = 1.0f,
-            FrequencyPenalty = 0,
-            PresencePenalty = 0
-        };
-
-        try {
-        Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
-
-        ChatCompletions completions = completionsResponse.Value;
-
-        string summary =  completions.Choices[0].Message.Content;
-
-        return summary;
-        }
-        catch (Exception e) {
-            return "Summary Error";
-        }
-    }
+            restart = false;
+            
+            ChatMessage systemMessage = new(ChatRole.System, _summarizePrompt);
+            ChatMessage userMessage = new(ChatRole.User, userPrompt);
+            
+            ChatCompletionsOptions options = new()
+            {
+                Messages = { 
+                    systemMessage,
+                    userMessage
+                },
+                User = sessionId,
+                MaxTokens = 200,
+                Temperature = 0.0f,
+                NucleusSamplingFactor = 1.0f,
+                FrequencyPenalty = 0,
+                PresencePenalty = 0
+            };
+    
+            try {
+            Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
+    
+            ChatCompletions completions = completionsResponse.Value;
+    
+            string summary =  completions.Choices[0].Message.Content;
+    
+            return summary;
+            }
+            catch (Exception e) {
+                return "Summary Error";
+                restart = true;
+            }
+        } while (restart);
 }
