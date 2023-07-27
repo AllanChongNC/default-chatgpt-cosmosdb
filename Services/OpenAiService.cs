@@ -87,9 +87,9 @@ public class OpenAiService
         
         catch (Exception e) {
             return (
-                response = "I am sorry, I cannot display this information.",
-                promptTokens = 0,
-                responseTokens =0
+                response: "I am sorry, I cannot display this information.",
+                promptTokens: 0,
+                responseTokens: 0
             );
         }
         
