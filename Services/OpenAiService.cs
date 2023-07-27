@@ -122,6 +122,7 @@ public class OpenAiService
             PresencePenalty = 0
         };
 
+        try {
         Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
         ChatCompletions completions = completionsResponse.Value;
@@ -129,5 +130,9 @@ public class OpenAiService
         string summary =  completions.Choices[0].Message.Content;
 
         return summary;
+        }
+        catch (Exception e) {
+            return "Summary Error";
+        }
     }
 }
