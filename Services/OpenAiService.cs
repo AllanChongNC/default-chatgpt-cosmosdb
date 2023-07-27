@@ -75,7 +75,7 @@ public class OpenAiService
     
         Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
-        if completionsResponse == null {
+        if (completionsResponse == null) {
                 return (
                     response: "I am sorry, I cannot display this information.",
                     promptTokens: 0,
