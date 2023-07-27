@@ -72,25 +72,25 @@ public class OpenAiService
             FrequencyPenalty = 0,
             PresencePenalty = 0
         };
-    
-        Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
-        if (completionsResponse == null) {
-                return (
-                    response: "I am sorry, I cannot display this information.",
-                    promptTokens: 0,
-                    responseTokens: 0
-                );
-        } else
-        {
-             ChatCompletions completions = completionsResponse.Value;
-        
-                return (
-                    response: completions.Choices[0].Message.Content,
-                    promptTokens: completions.Usage.PromptTokens,
-                    responseTokens: completions.Usage.CompletionTokens
-                );
+        try {
+            Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
+    
+            ChatCompletions completions = completionsResponse.Value;
+            
+            return (
+                response: completions.Choices[0].Message.Content,
+                promptTokens: completions.Usage.PromptTokens,
+                responseTokens: completions.Usage.CompletionTokens
+            );
         }
+        catch (Exception e) {
+            return (
+                response: "I am sorry, I cannot display this information.",
+                promptTokens: 0,
+                responseTokens: 0
+            );
+        } 
                
     }
             
@@ -122,15 +122,10 @@ public class OpenAiService
 
         Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
-        try {
-            ChatCompletions completions = completionsResponse.Value;
+        ChatCompletions completions = completionsResponse.Value;
 
-            string summary =  completions.Choices[0].Message.Content;
+        string summary =  completions.Choices[0].Message.Content;
 
-            return summary;
-        }
-        catch (Exception e) {
-            return "Summary Error";
-        }             
+        return summary;           
     }
 }
