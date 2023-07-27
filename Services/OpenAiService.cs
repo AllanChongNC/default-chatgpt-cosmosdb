@@ -73,15 +73,26 @@ public class OpenAiService
             PresencePenalty = 0
         };
 
-        Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
-
-        ChatCompletions completions = completionsResponse.Value;
-
-        return (
-            response: completions.Choices[0].Message.Content,
-            promptTokens: completions.Usage.PromptTokens,
-            responseTokens: completions.Usage.CompletionTokens
-        );
+        try {
+            Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
+    
+            ChatCompletions completions = completionsResponse.Value;
+    
+            return (
+                response: completions.Choices[0].Message.Content,
+                promptTokens: completions.Usage.PromptTokens,
+                responseTokens: completions.Usage.CompletionTokens
+            );
+        }
+        
+        catch (Exception e) {
+            return (
+                response = "I am sorry, I cannot display this information.",
+                promptTokens = 0,
+                responseTokens =0
+            );
+        }
+        
     }
     
     /// <summary>
