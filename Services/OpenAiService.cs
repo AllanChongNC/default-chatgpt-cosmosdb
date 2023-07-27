@@ -145,4 +145,5 @@ public class OpenAiService
                 restart = true;
             }
         } while (restart);
+    }
 }
