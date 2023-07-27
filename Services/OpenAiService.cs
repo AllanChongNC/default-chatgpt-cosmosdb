@@ -122,14 +122,15 @@ public class OpenAiService
 
         Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
 
-        if (completionsResponse == null) {
-            return "Summary Error";
-        } else {
+        try {
             ChatCompletions completions = completionsResponse.Value;
 
             string summary =  completions.Choices[0].Message.Content;
 
             return summary;
         }
+        catch (Exception e) {
+            return "Summary Error";
+        }             
     }
 }
