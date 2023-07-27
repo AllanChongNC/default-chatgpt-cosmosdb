@@ -54,7 +54,9 @@ public class OpenAiService
     /// <returns>Response from the OpenAI model along with tokens for the prompt and response.</returns>
     public async Task<(string response, int promptTokens, int responseTokens)> GetChatCompletionAsync(string sessionId, string userPrompt)
     {
-
+        bool restart = false
+        do {
+        restart = false;
         ChatMessage systemMessage = new(ChatRole.System, _systemPrompt);
         ChatMessage userMessage = new(ChatRole.User, userPrompt);
         
@@ -90,7 +92,10 @@ public class OpenAiService
                 promptTokens: 0,
                 responseTokens: 0
             );
+            restart = true;
         } 
+
+        } while (restart);
                
     }
             
