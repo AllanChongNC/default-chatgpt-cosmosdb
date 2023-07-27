@@ -54,46 +54,51 @@ public class OpenAiService
     /// <returns>Response from the OpenAI model along with tokens for the prompt and response.</returns>
     public async Task<(string response, int promptTokens, int responseTokens)> GetChatCompletionAsync(string sessionId, string userPrompt)
     {
-        
-        ChatMessage systemMessage = new(ChatRole.System, _systemPrompt);
-        ChatMessage userMessage = new(ChatRole.User, userPrompt);
-        
-        ChatCompletionsOptions options = new()
+        bool restart = false;
+        do
         {
+            restart = false;
+        
+            ChatMessage systemMessage = new(ChatRole.System, _systemPrompt);
+            ChatMessage userMessage = new(ChatRole.User, userPrompt);
             
-            Messages =
+            ChatCompletionsOptions options = new()
             {
-                ///systemMessage,
-                userMessage
-            },
-            User = sessionId,
-            MaxTokens = 4000,
-            Temperature = 0.3f,
-            NucleusSamplingFactor = 0.5f,
-            FrequencyPenalty = 0,
-            PresencePenalty = 0
-        };
-
-        try {
-            Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
+                
+                Messages =
+                {
+                    ///systemMessage,
+                    userMessage
+                },
+                User = sessionId,
+                MaxTokens = 4000,
+                Temperature = 0.3f,
+                NucleusSamplingFactor = 0.5f,
+                FrequencyPenalty = 0,
+                PresencePenalty = 0
+            };
     
-            ChatCompletions completions = completionsResponse.Value;
-    
-            return (
-                response: completions.Choices[0].Message.Content,
-                promptTokens: completions.Usage.PromptTokens,
-                responseTokens: completions.Usage.CompletionTokens
-            );
-        }
+            try {
+                Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
         
-        catch (Exception e) {
-            return (
-                response: "I am sorry, I cannot display this information.",
-                promptTokens: 0,
-                responseTokens: 0
-            );
-        }
+                ChatCompletions completions = completionsResponse.Value;
         
+                return (
+                    response: completions.Choices[0].Message.Content,
+                    promptTokens: completions.Usage.PromptTokens,
+                    responseTokens: completions.Usage.CompletionTokens
+                );
+            }
+            
+            catch (Exception e) {
+                return (
+                    response: "I am sorry, I cannot display this information.",
+                    promptTokens: 0,
+                    responseTokens: 0
+                );
+                restart = true;
+            }
+        } while (restart);
     }
     
     /// <summary>
