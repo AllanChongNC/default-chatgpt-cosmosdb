@@ -133,7 +133,6 @@ public class OpenAiService
         }
         catch (Exception e) {
             return "Summary Error";
-            throw;
         }
     }
 }
