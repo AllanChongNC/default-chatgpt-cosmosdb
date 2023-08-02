@@ -122,12 +122,17 @@ public class OpenAiService
             PresencePenalty = 0
         };
 
-        Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
-
-        ChatCompletions completions = completionsResponse.Value;
-
-        string summary =  completions.Choices[0].Message.Content;
-
-        return summary;           
+        try {
+            Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
+    
+            ChatCompletions completions = completionsResponse.Value;
+    
+            string summary =  completions.Choices[0].Message.Content;
+    
+            return summary; 
+        }
+        catch (Exception e) {
+            return "Summary Error";
+        }
     }
 }
