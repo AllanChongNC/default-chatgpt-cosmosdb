@@ -3,7 +3,7 @@
 }
 
 .bg-yellow {
-  background-color: #ffcd00;
+  background-color: #FFFF00;
 }
 
 .red-color {
@@ -11,5 +11,13 @@
 }
 
 .yellow-color {
-  color: #ffcd00;
+  color: #FFFF00;
+}
+
+.bg-green {
+  background-color: #009B00;
+}
+
+.green-color {
+  color: #009B00;
 }
