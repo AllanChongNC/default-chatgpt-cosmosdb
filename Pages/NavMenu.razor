@@ -34,7 +34,7 @@
                         @foreach (var session in ChatSessions)
                         {
                             <div class="col">
-                                <div class="card @(IsActiveSession(session.SessionId) ? "bg-red text-light" : "bg-red opacity-50 text-light")">
+                                <div class="card @(IsActiveSession(session.SessionId) ? "bg-green text-light" : "bg-green opacity-50 text-light")">
                                     <div class="card-body user-select-none" role="button" @onclick="@(e => LoadChat(session.SessionId,session.Name, session.TokensUsed))">
                                         <a class="card-title text-decoration-none h6">
                                             @if (IsActiveSession(session.SessionId))
