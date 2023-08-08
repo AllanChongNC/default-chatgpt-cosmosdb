@@ -55,6 +55,7 @@ public class OpenAiService
     public async Task<(string response, int promptTokens, int responseTokens)> GetChatCompletionAsync(string sessionId, string userPrompt)
     {
 
+        try{
         ChatMessage systemMessage = new(ChatRole.System, _systemPrompt);
         ChatMessage userMessage = new(ChatRole.User, userPrompt);
         
@@ -73,7 +74,7 @@ public class OpenAiService
             PresencePenalty = 0
         };
 
-        try {
+        
             Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
     
             ChatCompletions completions = completionsResponse.Value;
@@ -85,10 +86,33 @@ public class OpenAiService
             );
         }
         catch (Exception e) {
+           
+        ChatMessage userMessage = new(ChatRole.User, "Describe your content policies");
+        
+        ChatCompletionsOptions options = new()
+        {
+            Messages =
+            {
+                ///systemMessage,
+                userMessage
+            },
+            User = sessionId,
+            MaxTokens = 4000,
+            Temperature = 0.3f,
+            NucleusSamplingFactor = 0.5f,
+            FrequencyPenalty = 0,
+            PresencePenalty = 0
+        };
+
+        
+            Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(_modelName, options);
+    
+            ChatCompletions completions = completionsResponse.Value;
+            
             return (
-                response: "I am sorry, I cannot display this information.",
-                promptTokens: 0,
-                responseTokens: 0
+                response: completions.Choices[0].Message.Content,
+                promptTokens: completions.Usage.PromptTokens,
+                responseTokens: completions.Usage.CompletionTokens
             );
 
         } 
