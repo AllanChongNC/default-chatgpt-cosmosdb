@@ -105,8 +105,7 @@
 					string replacement = "<pre>$1</pre>";
 					//text = Regex.Replace(text, pattern, replacement);
 
-					text = Regex.Replace(text, pattern, HttpUtility.HtmlEncode(replacement));
-					
+					text = Regex.Replace(text, pattern, System.Net.WebUtility.HtmlEncode(replacement));					
                                         MarkupString html = new MarkupString(text);
                                     }
                                     @html
