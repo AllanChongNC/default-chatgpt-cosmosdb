@@ -102,10 +102,9 @@
                                     @{
 					var text = msg.Text.Replace("\n", "<br />");					
 					string pattern = @"```(.*?)```"; 
-					string replacement = "<pre>\\1</pre>";
-					///text = Regex.Replace(text, pattern, replacement);
-
-					text = Regex.Replace(text, pattern, System.Net.WebUtility.HtmlEncode(replacement));					
+					string replacement = "<pre>$1</pre>";
+					//text = Regex.Replace(text, pattern, System.Net.WebUtility.HtmlEncode(replacement));					
+					text = Regex.Replace(text, pattern, replacement, RegexOptions.Singleline);					
                                         MarkupString html = new MarkupString(text);
                                     }
                                     @html
