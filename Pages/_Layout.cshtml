@@ -5,6 +5,14 @@
 <!doctype html>
 <html lang="en" class="h-100">
     <head>
+        <meta http-equiv="Content-Security-Policy" 
+                content="base-uri 'self';
+               default-src 'self';
+               img-src data: https:;
+               object-src 'none';
+               script-src 'self';
+               style-src 'self';
+               upgrade-insecure-requests;">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <base href="~/" />
@@ -17,14 +25,7 @@
         <link rel="stylesheet" href="style-sheet.css">
         <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
         <script src="js/site.js"></script>
-        <meta http-equiv="Content-Security-Policy" 
-                content="base-uri 'self';
-               default-src 'self';
-               img-src data: https:;
-               object-src 'none';
-               script-src 'self';
-               style-src 'self';
-               upgrade-insecure-requests;">
+        
     </head>
     <body class="h-100">
         <div id="blazor-error-ui" class="collapse fixed-top rounded-0 mb-0 alert alert-danger" role="alert">
