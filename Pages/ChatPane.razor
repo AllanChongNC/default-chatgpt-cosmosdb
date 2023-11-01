@@ -106,13 +106,11 @@
 					
 					text = Regex.Replace(text, pattern, match =>
 					{
-					    var content = match.Groups[1].Value;
-						var replacedcontent = $"<pre><code>{System.Net.WebUtility.HtmlEncode(content)}</code></pre>";
-						return replacedcontent.Replace("<br />","");
-					    //return $"<pre><code>{System.Net.WebUtility.HtmlEncode(content)}</code></pre>";
+					    	var content = match.Groups[1].Value;
+						content = content.Replace("<br />","");
+						return $"<pre><code>{System.Net.WebUtility.HtmlEncode(content)}</code></pre>";
 					});
 
-					///text = text.Replace("\n", "<br />");	
                                         MarkupString html = new MarkupString(text);
                                     }
                                     @html
