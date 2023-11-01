@@ -111,9 +111,9 @@
                                                 else
                                                     // odd = end code block tag
                                                     text = rgx.Replace(text, "</pre></code>", 1, i);
-                                        //MarkupString html = new MarkupString(text);
+                                        MarkupString html = new MarkupString(text);
                                     }
-                                    @text
+                                    @html
                                 </div>
                             </div>
                         }
