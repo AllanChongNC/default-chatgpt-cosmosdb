@@ -100,7 +100,7 @@
                                 <div class="toast-body">
                                     <i class="bi bi-grip-vertical mr-2 text-black-50"></i>
                                     @{
-					var text = msg.Text;					
+					var text = msg.Text.Replace("\n", "<br />");					
 				
 					const string pattern = "```(.*?)```"; 
 					
