@@ -101,10 +101,15 @@
                                     <i class="bi bi-grip-vertical mr-2 text-black-50"></i>
                                     @{
 					var text = msg.Text.Replace("\n", "<br />");					
-					string pattern = @"```(.*?)```"; 
-					string replacement = "<pre>$1</pre>";
-					//text = Regex.Replace(text, pattern, System.Net.WebUtility.HtmlEncode(replacement));					
-					text = Regex.Replace(text, pattern, replacement, RegexOptions.Singleline);					
+				
+					const string pattern = "```(.*?)```"; 
+					
+					text = Regex.Replace(text, pattern, match =>
+					{
+					    var content = match.Groups[1].Value;
+					    return $"<pre><code>{System.Net.WebUtility.HtmlEncode(content)}</code></pre>";
+					});
+
                                         MarkupString html = new MarkupString(text);
                                     }
                                     @html
